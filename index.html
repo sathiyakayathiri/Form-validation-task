@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation</title>
+  <style>
+    #submitButton {
+      cursor: not-allowed;
+      background-color:aqua;
+    }
+  
+  </style>
+</head>
+<body>
+  <h2 style="color: blueviolet;margin: 10;">Form Validation</h2>
+  <form id="myForm" style="color: blue; border: solid black; padding: 10px;width: 300px; background-color: greenyellow;"  onsubmit="return validateForm()">
+    <label for="name ">Name:</label>
+    <input type="text" id="name" name="name"><br><br>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"><br><br>
+    
+    <button type="submit" id="submitButton" style="color:purple;" disabled>Submit</button>
+  </form>
+
+  <script>
+    // Enable or disable submit button based on form inputs
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', toggleSubmitButton);
+    });
+
+    function toggleSubmitButton() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      // Enable submit button if all fields are valid
+      const isValid = name && email && password
+      document.getElementById('submitButton').disabled = !isValid;
+    }
+
+    function validateForm() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (name === "") {
+        alert("Name field cannot be empty.");
+        return false; // Prevent form submission
+      }
+
+      if (password.length < 6) {
+        alert("Password must have at least 6 characters.");
+        return false; // Prevent form submission
+      }
+
+      if (!validateEmail(email)) {
+        alert("Please enter a valid email address.");
+        return false; // Prevent form submission
+      }
+
+      // If all validations pass, allow form submission
+      return true;
+    }
+
+    function validateEmail(email) {
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      return emailRegex.test(email);
+    }
+  </script>
+</body>
+</html>
+
+
+
